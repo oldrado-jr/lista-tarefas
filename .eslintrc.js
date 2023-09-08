@@ -42,5 +42,6 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
+    'react/state-in-constructor': 'off',
   },
 };
