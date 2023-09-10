@@ -9,11 +9,21 @@ class Main extends Component {
   state = {
     taskName: '',
     taskList: [],
+    index: -1,
   };
 
   handleChange = (e) => {
     this.setState({
       taskName: e.target.value,
+    });
+  };
+
+  handleEdit = (e, index) => {
+    const { taskList } = this.state;
+
+    this.setState({
+      taskName: taskList[index],
+      index,
     });
   };
 
@@ -31,7 +41,7 @@ class Main extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { taskList } = this.state;
+    const { taskList, index } = this.state;
     let { taskName } = this.state;
 
     taskName = taskName.trim();
@@ -42,10 +52,20 @@ class Main extends Component {
 
     const newTasks = [...taskList];
 
-    this.setState({
-      taskList: [...newTasks, taskName],
-      taskName: '',
-    });
+    if (index === -1) {
+      this.setState({
+        taskList: [...newTasks, taskName],
+        taskName: '',
+      });
+    } else {
+      newTasks[index] = taskName;
+
+      this.setState({
+        taskList: [...newTasks],
+        taskName: '',
+        index: -1,
+      });
+    }
   };
 
   render() {
@@ -67,7 +87,10 @@ class Main extends Component {
             <li key={task}>
               {task}
               <div>
-                <FaEdit className="edit" />
+                <FaEdit
+                  className="edit"
+                  onClick={(e) => this.handleEdit(e, index)}
+                />
                 <FaWindowClose
                   className="delete"
                   onClick={(e) => this.handleDelete(e, index)}
