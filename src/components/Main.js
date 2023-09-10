@@ -12,6 +12,26 @@ class Main extends Component {
     index: -1,
   };
 
+  componentDidMount() {
+    const taskList = JSON.parse(localStorage.getItem('tasks'));
+
+    if (!taskList) {
+      return;
+    }
+
+    this.setState({ taskList });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { taskList } = this.state;
+
+    if (taskList === prevState.taskList) {
+      return;
+    }
+
+    localStorage.setItem('tasks', JSON.stringify(taskList));
+  }
+
   handleChange = (e) => {
     this.setState({
       taskName: e.target.value,
