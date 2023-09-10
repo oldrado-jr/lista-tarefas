@@ -25,7 +25,7 @@ class Main extends Component {
 
     taskName = taskName.trim();
 
-    if (taskList.includes(taskName)) {
+    if (!taskName || taskList.includes(taskName)) {
       return;
     }
 
