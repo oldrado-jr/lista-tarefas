@@ -17,6 +17,17 @@ class Main extends Component {
     });
   };
 
+  handleDelete = (e, index) => {
+    const { taskList } = this.state;
+    const newTaskList = [...taskList];
+
+    newTaskList.splice(index, 1);
+
+    this.setState({
+      taskList: [...newTaskList],
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,12 +63,15 @@ class Main extends Component {
         </form>
 
         <ul className="tasks">
-          {taskList.map((task) => (
+          {taskList.map((task, index) => (
             <li key={task}>
               {task}
               <div>
                 <FaEdit className="edit" />
-                <FaWindowClose className="delete" />
+                <FaWindowClose
+                  className="delete"
+                  onClick={(e) => this.handleDelete(e, index)}
+                />
               </div>
             </li>
           ))}
